@@ -5,7 +5,7 @@
  */
 angular.module('ur.http.auth', []).service("base64", ['$window', function($window) {
 
-  /**
+	/**
 	 * Base64 encoding service. Provides a fallback for browsers that don't implement
 	 * `btoa()` / `atob()` (*ahem!* IE).
 	 */
