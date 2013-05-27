@@ -2,6 +2,7 @@
 
 AngularJS service for handling HTTP authentication and request queuing.
 
+---
 This library allows Angular applications to connect to APIs which which expose their resources via HTTP authentication.
 
 It does this by waiting for failed HTTP requests, and notifying subscribed scopes that authentication is required. Scopes can prompt users for credentials, which are then submitted to the auth service. When the queue of failed requests is flushed, the requests are re-tried with credentials.
@@ -9,6 +10,9 @@ It does this by waiting for failed HTTP requests, and notifying subscribed scope
 ## Example
 
 ```javascript
+/**
+ * Define application module with `ur.http.auth` dependency.
+ */
 var app = angular.module("app", ["ur.http.auth", "ngResource"]);
 
 app.config(function($httpProvider, requestQueueProvider) {
