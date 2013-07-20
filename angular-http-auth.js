@@ -136,7 +136,7 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 			if (!credentials || !credentials.username || !credentials.password) {
 				throw new Error("Credentials expects 'username' & 'password' properties");
 			}
-			var hash = base64.encode(credentials.username + ':' + credentials.password);
+			var hash = base64.encode.call(window, credentials.username + ':' + credentials.password);
 
 			forEach(isArray(options.type) ? options.type : [options.type], function(type) {
 				$http.defaults.headers[type].Authorization = 'Basic ' + hash;
