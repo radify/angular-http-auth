@@ -197,6 +197,7 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 		$get: ['$http', function($http) {
 
 			function retry(request) {
+        delete(request.config.headers['Authorization']);
 				$http(request.config).then(function(response) {
 					request.deferred.resolve(response);
 				});
