@@ -197,6 +197,10 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 		$get: ['$http', function($http) {
 
 			function retry(request) {
+				var defaultHeaders = $http.defaults.headers[request.config.method] || 
+          $http.defaults.headers.common;
+          
+        angular.extend(request.config.headers, defaultHeaders);
 				$http(request.config).then(function(response) {
 					request.deferred.resolve(response);
 				});
