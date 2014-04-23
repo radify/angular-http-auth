@@ -144,7 +144,7 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 		}
 	});
 
-}]).provider('requestQueue', function() {
+}]).provider('requestQueue', ['$httpProvider', function($httpProvider) {
 
 	/**
 	 * The requestQueue service
@@ -194,7 +194,7 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 			}]);
 		},
 
-		$get: ['$http', function($http) {
+		$get: ['$http', '$rootScope', function($http, $rootScope) {
 
 			function retry(request) {
 				var defaultHeaders = $http.defaults.headers[request.config.method] || 
@@ -206,10 +206,15 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 				});
 			}
 
+			subscribers.push($rootScope);
+
 			return extend(this, {
 				broadcastTo: function(scope) {
 					if (!scope.$broadcast) {
 						throw new Error("Expected $scope or object that supports '$broadcast()'.");
+					}
+					if (subscribers == [$rootScope]) {
+						subscribers = [];
 					}
 					subscribers.push(scope);
 				},
@@ -224,4 +229,6 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 			});
 		}]
 	});
-});
+
+	this.subscribeTo($httpProvider);
+}]);

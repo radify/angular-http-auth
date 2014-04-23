@@ -13,22 +13,7 @@ It does this by waiting for failed HTTP requests, and notifying subscribed scope
 /**
  * Define application module with `ur.http.auth` dependency.
  */
-var app = angular.module("app", ["ur.http.auth", "ngResource"]);
-
-app.config(function($httpProvider, requestQueueProvider) {
-
-  /**
-   * Allow `requestQueue` to subscribe to `$http`, to intercept HTTP 401/403
-   * responses, and prompt for authentication.
-   */
-  requestQueueProvider.subscribeTo($httpProvider);
-
-}).run(function(requestQueue, $rootScope, $resource) {
-
-  /**
-   * Subscribe the root scope to notifications from the request queue.
-   */
-  requestQueue.broadcastTo($rootScope);
+var app = angular.module("app", ["ur.http.auth", "ngResource"]).run(function($resource) {
 
   /**
    * Query a resource that is protected by authentication.
