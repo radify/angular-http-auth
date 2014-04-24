@@ -129,6 +129,10 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
 
   var extend = angular.extend, isArray = angular.isArray, forEach = angular.forEach;
 
+  function loop(list, op) {
+    forEach(isArray(list) ? list : [list], op);
+  }
+
   extend(this, {
     basic: function(credentials, options) {
       options = extend({ type: 'common' }, options || {});
@@ -138,8 +142,16 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
       }
       var hash = base64.encode(credentials.username + ':' + credentials.password);
 
-      forEach(isArray(options.type) ? options.type : [options.type], function(type) {
+      loop(options.type, function(type) {
         $http.defaults.headers[type].Authorization = 'Basic ' + hash;
+      });
+    },
+
+    cancel: function(options) {
+      options = extend({ type: 'common' }, options || {});
+
+      loop(options.type, function(type) {
+          delete $http.defaults.headers[type].Authorization;
       });
     }
   });
