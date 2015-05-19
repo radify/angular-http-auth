@@ -196,13 +196,11 @@ angular.module('ur.http.auth', []).service("base64", ['$window', function($windo
     },
 
     subscribeTo: function($httpProvider) {
-      $httpProvider.responseInterceptors.push(['$q', function($q) {
-        return function (promise) {
-          return promise.then(function success(resp) {
-            return resp;
-          }, function error(resp) {
+      $httpProvider.interceptors.push(['$q', function($q) {
+        return {
+          responseError: function(resp) {
             return isValid(resp) ? enqueueAndNotify(resp, $q.defer()) : $q.reject(resp);
-          });
+          }
         };
       }]);
     },
