@@ -3,7 +3,7 @@
  * @copyright 2013, Union of RAD, LLC (http://union-of-rad.com/)
  * @link https://github.com/uor/angular-auth-http#readme
  */
-angular.module('ur.http.auth', []).service("base64", ['$window', function($window) {
+angular.module('rad.http-auth', []).service("base64", ['$window', function($window) {
 
   /**
    * Base64 encoding service. Provides a fallback for browsers that don't implement
